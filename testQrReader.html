@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <title>Test Qr Reader</title>
+  <script src="js/qr.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script>
+    function openQRCamera(node) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        node.value = "";
+        qrcode.callback = function (res) {
+          if (res instanceof Error) {
+            alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+          } else {
+            node.parentNode.previousElementSibling.value = res;
+            window.location.href =  String($('#txtValue').val())
+          }
+        };
+        qrcode.decode(reader.result);
+      
+      };
+      reader.readAsDataURL(node.files[0])
+     
+
+    }
+
+
+    function showQRIntro() {
+      return confirm("Use your camera to take a picture of a QR code.");
+    }
+
+    function goUrl() {
+      var url = $('#txtValue').val();
+      alert(url);
+      if (url == "" || url == null) {
+        alert("no url !");
+      }
+      else {
+        alert(url);
+        window.location.href = url;
+      }
+    }
+
+  </script>
+</head>
+
+<body>
+  <input type=text size=16 placeholder="Tracking Code" class=qrcode-text id="txtValue">
+  <label class=qrcode-text-btn>
+    <input type=file accept="image/*"  onchange="openQRCamera(this);" onclick="return showQRIntro();" tabindex=-1>
+
+  </label>
+
+  <input type="hidden" id="hidUrl">
+  <button type="button" id="btnGo" onclick="goUrl();">Go!!</button>
+
+</body>
+
+</html>
