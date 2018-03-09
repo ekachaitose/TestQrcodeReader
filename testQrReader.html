@@ -19,7 +19,8 @@
 
   <!-- Toastr -->
   <script src="js/plugins/toastr/toastr.min.js"></script>
-  <script src="js/qr.min.js"></script>
+  <!-- <script src="js/qr.min.js"></script> -->
+  <script src="js/qrcode.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -44,7 +45,8 @@
             alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
           } else {
             node.parentNode.previousElementSibling.value = res;
-            window.location.href = String($('#txtValue').val())
+            alert($('#txtValue').val())
+           // window.location.href = String($('#txtValue').val())
           }
         };
         qrcode.decode(reader.result);
@@ -127,12 +129,13 @@
       <div class="col-md-12" style="padding-top:10px">
         <input type=text size=16 placeholder="Tracking Code" class=qrcode-text id="txtValue">
         <label class=qrcode-text-btn>
-          <input type=file accept="image/*" onchange="openQRCamera(this);" onclick="return showQRIntro();" tabindex=-1>
+          <input type=file accept="capture=camera" onchange="openQRCamera(this);" onclick="return showQRIntro();" tabindex=-1>
 
         </label>
 
         <input type="hidden" id="hidUrl">
         <button type="button" id="btnGo" onclick="goUrl();">Go!!</button>
+        <canvas id="qr-canvas" width="640" height="480"></canvas>
       </div>
     </div>
   </div>
